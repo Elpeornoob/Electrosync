@@ -22,12 +22,12 @@ Total de Venta: $ 2640000.0
 
 ------------------------------------------------------------------------
 INFORME DE VENTA
-Fecha de Venta: Thu Oct 05 13:05:39 COT 2023
-Cliente: Reclo
-Producto Vendido: Pc1
-Cantidad Vendida: 2
-Total de Venta: $ 8800000.0
+Fecha de Venta: Tue Oct 10 19:08:36 COT 2023
+Cliente: Fernan
+Producto Vendido: Elquesea
+Cantidad Vendida: 30
+Total de Venta: $ 1320000.0
 ------------------------------------------------------------------------
 
 
-Total de Ventas: 1.496E7
+Total de Ventas: 7480000.0
