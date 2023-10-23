@@ -23,4 +23,8 @@ public class Usuario {
 		return tipoUsuario;
 	}
 
+	public String tipoUsuario() {
+		return "Usuario [tipoUsuario=" + tipoUsuario + "]";
+	}
+
 }

@@ -14,9 +14,10 @@ public class Principal {
 		 //Crear un registro de ventas y agregar algunas ventas
 		 RegistroVentas registroVentas = new RegistroVentas();
 		 
+		 //Craar lista usuarios
+		 ListaDeUsuarios usuariosEnElSistema = new ListaDeUsuarios();
 		 
 		 //Crear algunos Usuarios
-		 
 		 ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
 		 Usuario vendedor = new Usuario("Panchi", "Panchito123", TipoUsuario.VENDEDOR);
 		 usuarios.add(vendedor);
@@ -24,6 +25,7 @@ public class Principal {
 		 usuarios.add(encaargadoInv);
 		 Usuario gerente =  new Usuario("Carlos", "gerencia10", TipoUsuario.GERENTE);
 		 usuarios.add(gerente);
+		 usuariosEnElSistema.agregarUsuarios(usuarios);
 		 
 		//Menu Inicio de Sesion
 		int condicion00 = 1;
@@ -515,7 +517,7 @@ public class Principal {
 							int condicion0 = 1;
 							while(condicion0 == 1) {
 								
-								String opciones0[] = {"1. Agregar Producto" ,"2. Buscar Producto", "3. Ventas", "4. Agregar Usuario" , "5. Salir"};
+								String opciones0[] = {"1. Agregar Producto" ,"2. Buscar Producto", "3. Ventas", "4. Agregar Usuario" , "5. Ver Usuarios" , "6. Salir"};
 								int opcionMenu0;
 								
 								opcionMenu0 = JOptionPane.showOptionDialog(
@@ -862,6 +864,11 @@ public class Principal {
 									}
 									
 									case 4:{
+										usuariosEnElSistema.motrarUsuarios();
+										break;
+									}
+									
+									case 5:{
 										condicion0 = 0;
 										break;
 									}
@@ -880,9 +887,11 @@ public class Principal {
 				}
 				case 3:{
 					condicion00 = 0;
+					System.exit(0);
 					break;
 				}
 		 	}
+			System.exit(0);
 		}
 	}
 
