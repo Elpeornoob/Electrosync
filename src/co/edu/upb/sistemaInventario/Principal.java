@@ -9,22 +9,11 @@ public class Principal {
 	public static void main(String[] args) {
 		 // Crear un inventario y agregar algunos productos
 		 Inventario inventario = new Inventario();
-		 Producto computador1 = new Producto("Computador 1","1" , 10, 800000);
-		 Producto celular2 = new Producto("Celular 2","2" , 5, 400000);
-		 Producto tablet3 = new Producto("Tablet 3","3" , 15, 500000);
-		 inventario.agregarProducto(computador1);
-		 inventario.agregarProducto(celular2);
-		 inventario.agregarProducto(tablet3);
-		 inventario.agregarProducto(new Producto("Usb", "4", 14, 7000));
+		 
 		
 		 //Crear un registro de ventas y agregar algunas ventas
-		 Cliente cliente1 = new Cliente("Bryan Gonzalo", "Cra 23 # 30-01", TipoDocumento.CARNÉ_DE_IDENTIDAD, "1096065198", "3204132543", "blizcanod12@gmail.com");
-		 ArrayList<Venta> ventas = new ArrayList<>();
-		 Venta venta1 = new Venta(new Date(2022, 3, 20, 14, 30, 57), computador1, 2, cliente1);
-		 Venta venta2 = new Venta(new Date(2022, 3, 20, 14, 30, 57), celular2, 3, cliente1);
-		 ventas.add(venta1);
-		 ventas.add(venta2);
-		 RegistroVentas registroVentas = new RegistroVentas(ventas);
+		 RegistroVentas registroVentas = new RegistroVentas();
+		 
 		 
 		 //Crear algunos Usuarios
 		 
@@ -36,7 +25,7 @@ public class Principal {
 		 Usuario gerente =  new Usuario("Carlos", "gerencia10", TipoUsuario.GERENTE);
 		 usuarios.add(gerente);
 		 
-		
+		//Menu Inicio de Sesion
 		int condicion00 = 1;
 		 while(condicion00 == 1) {
 			 String opciones00[] = {"Vendedor", "Encargado de Inventario", "Gerente", "Cerrar Sesión"};
@@ -67,10 +56,11 @@ public class Principal {
 							correcta = true;
 							JOptionPane.showMessageDialog(null, "Inicio de sesion exitoso");
 							
+							//Menu Vendedor
 							int condicion0 = 1;
 							while(condicion0 == 1) {
 								
-								String opciones0[] = {"1. Buscar Producto", "3. Ventas", "4. Salir"};
+								String opciones0[] = {"1. Buscar Producto", "2. Ventas", "3. Consultar Productos" , "4. Salir"};
 								int opcionMenu0;
 								
 								opcionMenu0 = JOptionPane.showOptionDialog(
@@ -87,6 +77,7 @@ public class Principal {
 									
 									case 0:{
 										
+										//Menu Buscar producto por nombre o ID
 										int condicion1 = 1;
 										while (condicion1 == 1){
 										
@@ -363,6 +354,11 @@ public class Principal {
 									}
 									
 									case 2:{
+										//Pendiente
+										break;
+									}
+									
+									case 3:{
 										condicion0 = 0;
 										break;
 									}

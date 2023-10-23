@@ -1,21 +1,28 @@
 package co.edu.upb.sistemaInventario;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class RegistroVentas {
 	private ArrayList<Venta> ventas;
-
-	public RegistroVentas(ArrayList<Venta> ventas) {
-		this.ventas = ventas;
+	private static final String JSON_FILE = "registroVentas.json";
+	
+	public RegistroVentas() {
+		ventas = new ArrayList<>();
+		cargarDatosDesdeJSON();
 	}
 	
 	public void registrarVenta(Venta venta) {
 		ventas.add(venta);
+		guardarDatosEnJSON();
 	}
 	
 	public void generarInformeVentas() {
@@ -25,7 +32,7 @@ public class RegistroVentas {
         for (int ii = 0; ii < ventas.size(); ii++) {
         	String titulo = "INFORME DE VENTA";
         	String fecha = "Fecha de Venta: " + ventas.get(ii).getFechaVenta();
-            String cliente = "Cliente: " + ventas.get(ii).getCliente().getNombreCLiente();
+            String cliente = "Cliente: " + ventas.get(ii).getCliente().getNombreCliente();
             String productoVendido = "Producto Vendido: " + ventas.get(ii).getProductoVendido().getNombreProducto();
             String cantidadVendida = "Cantidad Vendida: " + ventas.get(ii).getCantidadVendida();
             String totalDeVenta = "Total de Venta: $ " + ventas.get(ii).calcularTotal();
@@ -51,16 +58,34 @@ public class RegistroVentas {
         
         JOptionPane.showMessageDialog(null, "Total de Ventas: $ " + totalVentas);
         
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter("Output.txt"));
-            writer.write(cadenaConcatenada2);
-
-            writer.close();
-
-            JOptionPane.showMessageDialog(null, "Archivo creado correctamente");
-        } catch (IOException e) {
-        	JOptionPane.showMessageDialog(null, "Error al crear el archivo" + e.getMessage());
-        }
+	        try {
+	            BufferedWriter writer = new BufferedWriter(new FileWriter("Output.txt"));
+	            writer.write(cadenaConcatenada2);
+	
+	            writer.close();
+	
+	            JOptionPane.showMessageDialog(null, "Archivo creado correctamente");
+	        } catch (IOException e) {
+	        	JOptionPane.showMessageDialog(null, "Error al crear el archivo" + e.getMessage());
+	        }
         
+    	}
+	
+	private void cargarDatosDesdeJSON() {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+           ventas = objectMapper.readValue(new File(JSON_FILE), new TypeReference<ArrayList<Venta>>() {});
+        } catch (IOException e) {
+        	e.printStackTrace();
+        }
     }
-    }
+	
+	private void guardarDatosEnJSON() {
+	    try {
+	        ObjectMapper objectMapper = new ObjectMapper();
+	        objectMapper.writeValue(new File(JSON_FILE), ventas);
+	    } catch (IOException e) {
+	    	e.printStackTrace();
+	    }
+	}
+ }

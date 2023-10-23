@@ -15,6 +15,10 @@ public class Venta {
 		this.cantidadVendida = cantidadVendida;
 		this.cliente = cliente;
 	}
+	
+	public Venta() {
+		
+	}
 
 	public Date getFechaVenta() {
 		return fechaVenta;

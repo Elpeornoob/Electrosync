@@ -1,17 +1,24 @@
 package co.edu.upb.sistemaInventario;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-
 import javax.swing.JOptionPane;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Inventario {
 	private ArrayList<Producto> productos = new ArrayList<Producto>() ;
+	private static final String JSON_FILE = "inventario.json";
 
 	public Inventario(){
+		productos = new ArrayList<>();
+		cargarDatosDesdeJSON();
 	}
 
 	public void agregarProducto(Producto producto) {
 		productos.add(producto);
+		guardarDatosEnJSON();
 	}
 	
 	public void agregarProducto() {
@@ -38,7 +45,7 @@ public class Inventario {
 			dCostoProducto = Double.parseDouble(sCostoProducto);
 		}
 		Producto productoTemporal = new Producto(nombreDelProducto, codigoDelProducto, iStockProducto, dCostoProducto);
-		productos.add(productoTemporal);
+		agregarProducto(productoTemporal);;
     }
 	
 	public Producto buscarProductoPorNombre(String producto) {
@@ -64,14 +71,44 @@ public class Inventario {
 	}
 	
 	public void eliminarProducto(Producto producto) {
-		int indiceProducto = productos.indexOf(producto);
-		productos.remove(indiceProducto);
+	    int indiceProducto = productos.indexOf(producto);
+	    if (indiceProducto >= 0) {
+	        productos.remove(indiceProducto);
+	        guardarDatosEnJSON(); // Agrega esta línea para actualizar el JSON
+	    }
 	}
 	
-	public void eliminarCantidadDeProducto(Producto producto ,int cantidadAEliminar) {
-		int indiceProducto = productos.indexOf(producto);
-		int numeroParaEliminar = productos.get(indiceProducto).getStockProducto() - cantidadAEliminar;
-		productos.get(indiceProducto).setStockProducto(numeroParaEliminar);
+	public void eliminarCantidadDeProducto(Producto producto, int cantidadAEliminar) {
+	    int indiceProducto = productos.indexOf(producto);
+	    if (indiceProducto >= 0) {
+	        int stockActual = productos.get(indiceProducto).getStockProducto();
+	        int nuevoStock = stockActual - cantidadAEliminar;
+	        
+	        if (nuevoStock < 0) {
+	            nuevoStock = 0; // Asegurarse de que el stock no sea negativo
+	        }
+
+	        productos.get(indiceProducto).setStockProducto(nuevoStock);
+	        guardarDatosEnJSON(); // Agrega esta línea para actualizar el JSON
+	    }
 	}
 	
+	private void cargarDatosDesdeJSON() {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            productos = objectMapper.readValue(new File(JSON_FILE), new TypeReference<ArrayList<Producto>>() {});
+        } catch (IOException e) {
+        	e.printStackTrace();
+        }
+    }
+	
+	private void guardarDatosEnJSON() {
+	    try {
+	        ObjectMapper objectMapper = new ObjectMapper();
+	        objectMapper.writeValue(new File(JSON_FILE), productos);
+	    } catch (IOException e) {
+	    	e.printStackTrace();
+	    }
+	}
+
 }

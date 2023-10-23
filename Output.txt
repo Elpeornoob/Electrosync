@@ -1,0 +1,73 @@
+
+
+------------------------------------------------------------------------
+INFORME DE VENTA
+Fecha de Venta: Thu Apr 20 14:30:57 COT 3922
+Cliente: Bryan Gonzalo
+Producto Vendido: Celular 2
+Cantidad Vendida: 3
+Total de Venta: $ 2640000.0
+------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------
+INFORME DE VENTA
+Fecha de Venta: Thu Apr 20 14:30:57 COT 3922
+Cliente: Bryan Gonzalo
+Producto Vendido: Computador 1
+Cantidad Vendida: 2
+Total de Venta: $ 3520000.0
+------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------
+INFORME DE VENTA
+Fecha de Venta: Thu Apr 20 14:30:57 COT 3922
+Cliente: Bryan Gonzalo
+Producto Vendido: Celular 2
+Cantidad Vendida: 3
+Total de Venta: $ 2640000.0
+------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------
+INFORME DE VENTA
+Fecha de Venta: Thu Apr 20 14:30:57 COT 3922
+Cliente: Bryan Gonzalo
+Producto Vendido: Computador 1
+Cantidad Vendida: 2
+Total de Venta: $ 3520000.0
+------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------
+INFORME DE VENTA
+Fecha de Venta: Sat Oct 21 18:14:14 COT 2023
+Cliente: Karito
+Producto Vendido: Cargador 5
+Cantidad Vendida: 15
+Total de Venta: $ 792000.0
+------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------
+INFORME DE VENTA
+Fecha de Venta: Thu Apr 20 14:30:57 COT 3922
+Cliente: Bryan Gonzalo
+Producto Vendido: Celular 2
+Cantidad Vendida: 3
+Total de Venta: $ 2640000.0
+------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------
+INFORME DE VENTA
+Fecha de Venta: Thu Apr 20 14:30:57 COT 3922
+Cliente: Bryan Gonzalo
+Producto Vendido: Computador 1
+Cantidad Vendida: 2
+Total de Venta: $ 3520000.0
+------------------------------------------------------------------------
+
+
+Total de Ventas: 1.9272E7
