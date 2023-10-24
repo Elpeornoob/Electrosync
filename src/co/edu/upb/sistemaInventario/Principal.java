@@ -2,6 +2,8 @@ package co.edu.upb.sistemaInventario;
 
 import java.util.ArrayList;
 import java.util.Date;
+
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class Principal {
@@ -30,6 +32,7 @@ public class Principal {
 		//Menu Inicio de Sesion
 		int condicion00 = 1;
 		 while(condicion00 == 1) {
+			 
 			 String opciones00[] = {"Vendedor", "Encargado de Inventario", "Gerente", "Cerrar Sesión"};
 				int opcionMenu00;
 				opcionMenu00 = JOptionPane.showOptionDialog(
@@ -46,9 +49,15 @@ public class Principal {
 			switch(opcionMenu00) {
 				case 0:{
 					String passwordVendedor = JOptionPane.showInputDialog("Ingrese su contraseña: ");
+					if(passwordVendedor == null) {
+						break;
+					}
 					boolean correcta  = false;
 					ArrayList<Usuario> usuariosVendedores = new ArrayList<Usuario>();
 					for (int ii = 0; ii < usuarios.size();ii++) {
+						if(passwordVendedor == null) {
+							break;
+						}
 						if(usuarios.get(ii).getTipoDeUsuario().equals(TipoUsuario.VENDEDOR)) {
 							usuariosVendedores.add(usuarios.get(ii));
 						}
@@ -381,6 +390,9 @@ public class Principal {
 				case 1:{
 					
 					String passwordEncargado = JOptionPane.showInputDialog("Ingrese su contraseña: ");
+					if(passwordEncargado == null) {
+						break;
+					}
 					boolean correcta  = false;
 					ArrayList<Usuario> usuariosEncargado = new ArrayList<Usuario>();
 					for (int ii = 0; ii < usuarios.size();ii++) {
@@ -396,7 +408,7 @@ public class Principal {
 							int condicion0 = 1;
 							while(condicion0 == 1) {
 								
-								String opciones0[] = {"1. Agregar Producto" ,"2. Buscar Producto", "3. Salir"};
+								String opciones0[] = {"1. Agregar Producto" ,"2. Buscar Producto", "3. Informe Productos" , "4. Salir"};
 								int opcionMenu0;
 								
 								opcionMenu0 = JOptionPane.showOptionDialog(
@@ -482,6 +494,11 @@ public class Principal {
 									}
 									
 									case 2:{
+										inventario.generarInformeProductos();
+										break;
+									}
+									
+									case 3:{
 										condicion0 = 0;
 										break;
 									}
@@ -502,6 +519,9 @@ public class Principal {
 				case 2:{
 					
 					String passwordGerente = JOptionPane.showInputDialog("Ingrese su contraseña: ");
+					if(passwordGerente == null) {
+						break;
+					}
 					boolean correcta  = false;
 					ArrayList<Usuario> usuariosGerente = new ArrayList<Usuario>();
 					for (int ii = 0; ii < usuarios.size();ii++) {
@@ -595,6 +615,9 @@ public class Principal {
 											}
 											case 2:{
 												condicion1 = 0;
+											}
+											default:{
+												break;
 											}
 										}
 					
@@ -701,6 +724,9 @@ public class Principal {
 																	tipoDocumentoCliente = TipoDocumento.DOCUMENTO_NACIONAL_DE_IDENTIDAD;
 																	break;
 																}
+																default:{
+																	break;
+																}
 															}
 															String numeroDocumentoCliente = JOptionPane.showInputDialog("Ingrese el numero de documento del cliente: ");
 															Cliente clienteAVender = new Cliente(nombreCliente, direccionCliente, tipoDocumentoCliente, numeroDocumentoCliente, numeroTelefonoCliente, emailCliente);
@@ -770,6 +796,9 @@ public class Principal {
 																	tipoDocumentoCliente = TipoDocumento.DOCUMENTO_NACIONAL_DE_IDENTIDAD;
 																	break;
 																}
+																default:{
+																	break;
+																}
 															}
 															String numeroDocumentoCliente = JOptionPane.showInputDialog("Ingrese el numero de documento del cliente: ");
 															Cliente clienteAVender = new Cliente(nombreCliente, direccionCliente, tipoDocumentoCliente, numeroDocumentoCliente, numeroTelefonoCliente, emailCliente);
@@ -784,7 +813,7 @@ public class Principal {
 														}
 														
 														default:{
-															JOptionPane.showMessageDialog(null, "Invalido");
+															break;
 														}
 														
 														}
@@ -804,7 +833,7 @@ public class Principal {
 												}
 												
 												default:{
-													JOptionPane.showMessageDialog(null, "Invalido");
+													break;
 												}
 					
 											}
@@ -846,6 +875,9 @@ public class Principal {
 												tipo = TipoUsuario.ENCARGADO_DE_INVENTARIO;
 												break;
 											}
+											default:{
+												break;
+											}
 										
 										}
 										
@@ -873,6 +905,10 @@ public class Principal {
 										break;
 									}
 									
+									default:{
+										break;
+									}
+									
 								}
 								
 							}
@@ -890,8 +926,10 @@ public class Principal {
 					System.exit(0);
 					break;
 				}
+				default:
+					System.exit(0);
+					break;
 		 	}
-			System.exit(0);
 		}
 	}
 
