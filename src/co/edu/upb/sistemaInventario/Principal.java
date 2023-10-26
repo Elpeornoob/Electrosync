@@ -1,10 +1,13 @@
 package co.edu.upb.sistemaInventario;
 
-import java.util.ArrayList;
+import java.awt.JobAttributes;
+import java.util.ArrayList; 
 import java.util.Date;
-
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+
+//Pendiente en linea 427
+
+
 
 public class Principal {
 
@@ -12,7 +15,6 @@ public class Principal {
 		 // Crear un inventario y agregar algunos productos
 		 Inventario inventario = new Inventario();
 		 
-		
 		 //Crear un registro de ventas y agregar algunas ventas
 		 RegistroVentas registroVentas = new RegistroVentas();
 		 
@@ -116,7 +118,7 @@ public class Principal {
 													"Nombre: " + productoEncontrado.getNombreProducto() + "\n" +
 													"Codigo: " + productoEncontrado.getIdProducto() + "\n" +
 													"Cantidades: " + productoEncontrado.getStockProducto() + "\n" +
-													"Precio: " + productoEncontrado.getPrecioProducto()
+													"Precio: " + String.format("%.0f", productoEncontrado.getPrecioProducto())
 													);
 													break;
 												}
@@ -135,7 +137,7 @@ public class Principal {
 													"Nombre: " + productoEncontrado.getNombreProducto() + "\n" +
 													"Codigo: " + productoEncontrado.getIdProducto() + "\n" +
 													"Cantidades: " + productoEncontrado.getStockProducto() + "\n" +
-													"Precio: " + productoEncontrado.getPrecioProducto()
+													"Precio: " + String.format("%.0f", productoEncontrado.getPrecioProducto())
 													);
 													break;
 												}
@@ -158,7 +160,7 @@ public class Principal {
 										int condicion2 = 1;
 										while (condicion2 == 1){
 										
-										String opciones[] = {"1. Registrar una venta" , "2. Generar Informe de Ventas" , "3. Salir"};
+										String opciones[] = {"1. Registrar una venta" , "2. Generar Informe de Ventas" , "3. Registrar varias ventas" , "4. Salir"};
 										int opcionMenu1;
 										opcionMenu1 = JOptionPane.showOptionDialog(
 											null, 
@@ -255,9 +257,10 @@ public class Principal {
 															}
 															String numeroDocumentoCliente = JOptionPane.showInputDialog("Ingrese el numero de documento del cliente: ");
 															Cliente clienteAVender = new Cliente(nombreCliente, direccionCliente, tipoDocumentoCliente, numeroDocumentoCliente, numeroTelefonoCliente, emailCliente);
-															ventaTemp = new Venta(new Date(), productoEncontrado, iCantidadVendida, clienteAVender);
-															registroVentas.registrarVenta(ventaTemp);
+															ventaTemp = new Venta(productoEncontrado, iCantidadVendida);
+															registroVentas.registrarVentaUnica(ventaTemp, clienteAVender);
 															inventario.eliminarCantidadDeProducto(productoEncontrado, iCantidadVendida);
+															
 					
 															break;
 														}
@@ -324,8 +327,8 @@ public class Principal {
 															}
 															String numeroDocumentoCliente = JOptionPane.showInputDialog("Ingrese el numero de documento del cliente: ");
 															Cliente clienteAVender = new Cliente(nombreCliente, direccionCliente, tipoDocumentoCliente, numeroDocumentoCliente, numeroTelefonoCliente, emailCliente);
-															ventaTemp = new Venta(new Date(), productoEncontrado, iCantidadVendida, clienteAVender);
-															registroVentas.registrarVenta(ventaTemp);
+															ventaTemp = new Venta(productoEncontrado, iCantidadVendida);
+															registroVentas.registrarVentaUnica(ventaTemp, clienteAVender);
 															inventario.eliminarCantidadDeProducto(productoEncontrado, iCantidadVendida);
 					
 															break;
@@ -345,11 +348,149 @@ public class Principal {
 												}
 					
 												case 1:{
-													 registroVentas.generarInformeVentas();
-						                                break;
+													registroVentas.generarInformeVentas();
+						                            break;
+												}
+												
+												case 2:{
+													Cliente clienteAVender = null;
+													boolean seguiRegistrandoVentas = true;
+													int conditional = 1;
+													Producto productoEncontrado;
+													ArrayList<Venta> ventasTemp = new ArrayList<Venta>();
+													int iCantidadVendida = 0;
+													while(seguiRegistrandoVentas) {
+														while(conditional == 1) {
+															String opciones1[] = {"1. Buscar producto por nombre" , "2. Buscar producto por ID" , "3. Cerrar Factura", "4. Salir"};
+															int opcionMenu;
+															opcionMenu = JOptionPane.showOptionDialog(
+																	null, 
+																	"Seleccione una opcion: ", 
+																	"Menu de opciones", 
+																	JOptionPane.DEFAULT_OPTION,
+																	JOptionPane.QUESTION_MESSAGE, 
+																	null, 
+																	opciones1, 
+																	opciones1[0]
+																	);
+																
+															switch(opcionMenu) {
+																case 0:{
+																	Venta ventaTemp;
+																	String nombreProducto = JOptionPane.showInputDialog("Ingrese el nombre del producto: ");
+																	productoEncontrado =  inventario.buscarProductoPorNombre(nombreProducto);
+																	if(productoEncontrado != null) {
+																		
+																	}else {
+																		JOptionPane.showMessageDialog(null, "Producto no encontrado");
+																		break;
+																	}
+																	String sCantidadVendida = JOptionPane.showInputDialog("Ingrese la cantidad del producto vendido: ");
+																	if(Integer.parseInt(sCantidadVendida) > 0) {
+																		iCantidadVendida = Integer.parseInt(sCantidadVendida);
+																		if(iCantidadVendida <= productoEncontrado.getStockProducto()) {
+																			
+																		}else {
+																			JOptionPane.showMessageDialog(null, "No alcanza el stock, hay " + productoEncontrado.getStockProducto() + " cantidades del producto");
+																			break;
+																		}
+																	}else {
+																		break;
+																	}
+																	ventaTemp = new Venta(productoEncontrado, iCantidadVendida);
+																	ventasTemp.add(ventaTemp);
+																	break;
+																}
+																
+																case 1:{
+																	Venta ventaTemp;
+																	String idProdcuto = JOptionPane.showInputDialog("Ingrese el nombre del producto: ");
+																	productoEncontrado =  inventario.buscarProductoPorId(idProdcuto);
+																	if(productoEncontrado != null) {
+																		
+																	}else {
+																		JOptionPane.showMessageDialog(null, "Producto no encontrado");
+																		break;
+																	}
+																	String sCantidadVendida = JOptionPane.showInputDialog("Ingrese la cantidad del producto vendido: ");
+																	if(Integer.parseInt(sCantidadVendida) > 0) {
+																		iCantidadVendida = Integer.parseInt(sCantidadVendida);
+																		if(iCantidadVendida <= productoEncontrado.getStockProducto()) {
+																			
+																		}else {
+																			JOptionPane.showMessageDialog(null, "No alcanza el stock, hay " + productoEncontrado.getStockProducto() + " cantidades del producto");
+																			break;
+																		}
+																	}else {
+																		break;
+																	}
+																	ventaTemp = new Venta(productoEncontrado, iCantidadVendida);
+																	ventasTemp.add(ventaTemp);
+																	break;
+																}
+																
+																case 2:{
+																	String nombreCliente = JOptionPane.showInputDialog("Ingresar nombre del cliente: ");
+																	String direccionCliente = JOptionPane.showInputDialog("Ingrese la direccion del cliente: ");
+																	String numeroTelefonoCliente = JOptionPane.showInputDialog("Ingrese el numero de telefono del cliente: ");
+																	String emailCliente = JOptionPane.showInputDialog("Ingrese el E-Mail del cliente: ");
+																	TipoDocumento tipoDocumentoCliente = null;
+																	String opciones3[] = {"Cedula de Ciudadanía", "Cedula de Extranjería", "Tarjeta de identidad", "Carné de identidad", "Documento nacional de identidad"};
+																	int opcionMenu2;
+																	opcionMenu2 = JOptionPane.showOptionDialog(
+																		null, 
+																		"Seleccione una opcion: ", 
+																		"Menu de opciones", 
+																		JOptionPane.DEFAULT_OPTION,
+															    		JOptionPane.QUESTION_MESSAGE, 
+																		null, 
+																		opciones3, 
+																		opciones3[0]
+																		);
+																	switch(opcionMenu2) {
+																		
+																		case 0:{
+																			tipoDocumentoCliente = TipoDocumento.CEDULA_DE_CIUDADANIA;
+																			break;
+																		}
+																		case 1:{
+																			tipoDocumentoCliente = TipoDocumento.CEDULA_DE_EXTRANJERIA;
+																			break;
+																		}
+																		case 2:{
+																			tipoDocumentoCliente = TipoDocumento.TARJETA_DE_IDENTIDAD;
+																			break;
+																		}
+																		case 3:{
+																			tipoDocumentoCliente = TipoDocumento.CARNÉ_DE_IDENTIDAD;
+																			break;
+																		}
+																		case 4:{
+																			tipoDocumentoCliente = TipoDocumento.DOCUMENTO_NACIONAL_DE_IDENTIDAD;
+																			break;
+																		}
+																	}
+																	String numeroDocumentoCliente = JOptionPane.showInputDialog("Ingrese el numero de documento del cliente: ");
+																	clienteAVender = new Cliente(nombreCliente, direccionCliente, tipoDocumentoCliente, numeroDocumentoCliente, numeroTelefonoCliente, emailCliente);
+																	registroVentas.registrarVentasMultiples(ventasTemp, clienteAVender);
+																	seguiRegistrandoVentas = false;
+																	conditional = 0;
+																	break;
+																}
+																
+																case 3:{
+																	seguiRegistrandoVentas = false;
+																	conditional = 0;
+																	break;
+																}
+															}
+														}
+														
+													}// While Agregar ventas
+													break;
 												}
 					
-												case 2:{
+												case 3:{
 													condicion2 = 0;
 													break;
 												}
@@ -408,7 +549,7 @@ public class Principal {
 							int condicion0 = 1;
 							while(condicion0 == 1) {
 								
-								String opciones0[] = {"1. Agregar Producto" ,"2. Buscar Producto", "3. Informe Productos" , "4. Salir"};
+								String opciones0[] = {"1. Agregar Producto" , "2. Eliminar Productos" ,"3. Buscar Producto", "4. Informe Productos" , "4. Salir"};
 								int opcionMenu0;
 								
 								opcionMenu0 = JOptionPane.showOptionDialog(
@@ -447,6 +588,65 @@ public class Principal {
 					
 										switch(opcionMenu){
 											case 0:{
+												String nombreDelProducto = JOptionPane.showInputDialog("Ingrese el nombre del producto: ");
+												Producto productoEncontrado = inventario.buscarProductoPorNombre(nombreDelProducto);
+												if(productoEncontrado == null) {
+													JOptionPane.showMessageDialog(null, "Producto no encontrado");
+													break;
+												}
+												int cantidadAEliminar = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad a eliminar: "));
+												if(cantidadAEliminar < 0) {
+													break;
+												}if(cantidadAEliminar > productoEncontrado.getStockProducto()) {
+													JOptionPane.showMessageDialog(null, "Stock insuficiente");
+													break;
+												}
+												inventario.eliminarCantidadDeProducto(productoEncontrado, cantidadAEliminar);
+											}
+											case 1:{
+												String codigoDelProducto = JOptionPane.showInputDialog("Ingrese el codigo del producto: ");
+												Producto productoEncontrado = inventario.buscarProductoPorId(codigoDelProducto);
+												if(productoEncontrado == null) {
+													JOptionPane.showMessageDialog(null, "Producto no encontrado");
+													break;
+												}
+												int cantidadAEliminar = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad a eliminar: "));
+												if(cantidadAEliminar < 0) {
+													break;
+												}if(cantidadAEliminar > productoEncontrado.getStockProducto()) {
+													JOptionPane.showMessageDialog(null, "Stock insuficiente");
+													break;
+												}
+												inventario.eliminarCantidadDeProducto(productoEncontrado, cantidadAEliminar);
+												}
+											case 2:{
+												condicion1 = 0;
+											}
+										}
+					
+									}
+										
+									}
+									case 2:{
+										
+										int condicion1 = 1;
+										while (condicion1 == 1){
+										
+										String opciones[] = {"1. Buscar producto por nombre" , "2. Buscar producto por ID" , "3. Salir"};
+										int opcionMenu;
+										opcionMenu = JOptionPane.showOptionDialog(
+											null, 
+											"Seleccione una opcion: ", 
+											"Menu de opciones", 
+											JOptionPane.DEFAULT_OPTION,
+								    		JOptionPane.QUESTION_MESSAGE, 
+											null, 
+											opciones, 
+											opciones[0]
+											);
+					
+										switch(opcionMenu){
+											case 0:{
 											String nombreDelProducto = JOptionPane.showInputDialog("Ingrese el nombre del producto: ");
 												
 												Producto productoEncontrado = inventario.buscarProductoPorNombre(nombreDelProducto);
@@ -456,7 +656,7 @@ public class Principal {
 													"Nombre: " + productoEncontrado.getNombreProducto() + "\n" +
 													"Codigo: " + productoEncontrado.getIdProducto() + "\n" +
 													"Cantidades: " + productoEncontrado.getStockProducto() + "\n" +
-													"Precio: " + productoEncontrado.getPrecioProducto()
+													"Precio: " + String.format("%.0f", productoEncontrado.getPrecioProducto())
 													);
 													break;
 												}
@@ -475,7 +675,7 @@ public class Principal {
 													"Nombre: " + productoEncontrado.getNombreProducto() + "\n" +
 													"Codigo: " + productoEncontrado.getIdProducto() + "\n" +
 													"Cantidades: " + productoEncontrado.getStockProducto() + "\n" +
-													"Precio: " + productoEncontrado.getPrecioProducto()
+													"Precio: " + String.format("%.0f", productoEncontrado.getPrecioProducto())
 													);
 													break;
 												}
@@ -493,12 +693,12 @@ public class Principal {
 									break;
 									}
 									
-									case 2:{
+									case 3:{
 										inventario.generarInformeProductos();
 										break;
 									}
 									
-									case 3:{
+									case 4:{
 										condicion0 = 0;
 										break;
 									}
@@ -585,7 +785,7 @@ public class Principal {
 													"Nombre: " + productoEncontrado.getNombreProducto() + "\n" +
 													"Codigo: " + productoEncontrado.getIdProducto() + "\n" +
 													"Cantidades: " + productoEncontrado.getStockProducto() + "\n" +
-													"Precio: " + productoEncontrado.getPrecioProducto()
+													"Precio: " + String.format("%.0f", productoEncontrado.getPrecioProducto())
 													);
 													break;
 												}
@@ -604,7 +804,7 @@ public class Principal {
 													"Nombre: " + productoEncontrado.getNombreProducto() + "\n" +
 													"Codigo: " + productoEncontrado.getIdProducto() + "\n" +
 													"Cantidades: " + productoEncontrado.getStockProducto() + "\n" +
-													"Precio: " + productoEncontrado.getPrecioProducto()
+													"Precio: " + String.format("%.0f", productoEncontrado.getPrecioProducto())
 													);
 													break;
 												}
@@ -730,8 +930,8 @@ public class Principal {
 															}
 															String numeroDocumentoCliente = JOptionPane.showInputDialog("Ingrese el numero de documento del cliente: ");
 															Cliente clienteAVender = new Cliente(nombreCliente, direccionCliente, tipoDocumentoCliente, numeroDocumentoCliente, numeroTelefonoCliente, emailCliente);
-															ventaTemp = new Venta(new Date(), productoEncontrado, iCantidadVendida, clienteAVender);
-															registroVentas.registrarVenta(ventaTemp);
+															ventaTemp = new Venta(productoEncontrado, iCantidadVendida);
+															registroVentas.registrarVentaUnica(ventaTemp, clienteAVender);
 															inventario.eliminarCantidadDeProducto(productoEncontrado, iCantidadVendida);
 					
 															break;
@@ -802,8 +1002,8 @@ public class Principal {
 															}
 															String numeroDocumentoCliente = JOptionPane.showInputDialog("Ingrese el numero de documento del cliente: ");
 															Cliente clienteAVender = new Cliente(nombreCliente, direccionCliente, tipoDocumentoCliente, numeroDocumentoCliente, numeroTelefonoCliente, emailCliente);
-															ventaTemp = new Venta(new Date(), productoEncontrado, iCantidadVendida, clienteAVender);
-															registroVentas.registrarVenta(ventaTemp);
+															ventaTemp = new Venta(productoEncontrado, iCantidadVendida);
+															registroVentas.registrarVentaUnica(ventaTemp, clienteAVender);
 															inventario.eliminarCantidadDeProducto(productoEncontrado, iCantidadVendida);
 					
 															break;

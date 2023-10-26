@@ -38,9 +38,21 @@ public class Inventario {
 		if(nombreDelProducto == null) {
 			return;
 		}
+		for (int ii = 0; ii < productos.size(); ii++) {
+			if(productos.get(ii).getNombreProducto().equals(nombreDelProducto)) {
+				JOptionPane.showMessageDialog(null, "Ya hay un producto con este nombre.");
+				return;
+			}
+		}
 		String codigoDelProducto = JOptionPane.showInputDialog("Ingrese el código del producto: ");
 		if(codigoDelProducto == null) {
 			return;
+		}
+		for (int ii = 0; ii < productos.size(); ii++) {
+			if(productos.get(ii).getIdProducto().equals(codigoDelProducto)) {
+				JOptionPane.showMessageDialog(null, "Ya hay un prodducto con este codigo.");
+				return;
+			}
 		}
 		String sStockProducto = JOptionPane.showInputDialog("Ingrese la cantidad del producto: ");
 		int iStockProducto = 0;
@@ -50,11 +62,11 @@ public class Inventario {
 			iStockProducto = Integer.parseInt(sStockProducto);
 		}
 		String sCostoProducto = JOptionPane.showInputDialog("Ingrese el costo del producto: ");
-		Double dCostoProducto = null;
+		float dCostoProducto = 0;
 		if(sCostoProducto == null) {
 			return;
 		}else {
-			dCostoProducto = Double.parseDouble(sCostoProducto);
+			dCostoProducto = Float.parseFloat(sCostoProducto);
 		}
 		Producto productoTemporal = new Producto(nombreDelProducto, codigoDelProducto, iStockProducto, dCostoProducto);
 		agregarProducto(productoTemporal);;
@@ -150,10 +162,12 @@ public class Inventario {
 	        outputStream = new FileOutputStream(ubicacionArchivoSalida);
 	        libro.write(outputStream);
 	        libro.close();
-	        System.out.println("Informe de productos guardado correctamente en " + ubicacionArchivoSalida);
+	        JOptionPane.showMessageDialog(null, "Informe de productos guardado correctamente en " + ubicacionArchivoSalida);
 	    } catch (FileNotFoundException ex) {
+	    	JOptionPane.showMessageDialog(null, "Error, consultar a tenico");
 	        System.out.println("Error de FileNotFoundException: " + ex.getMessage());
 	    } catch (Exception e) {
+	    	JOptionPane.showMessageDialog(null, "Error, consultar a tenico");
 	        System.out.println("Error Exception e: " + e.getMessage());
 	    }
 	}
