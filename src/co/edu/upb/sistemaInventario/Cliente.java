@@ -18,7 +18,11 @@ public class Cliente {
 		this.email = email;
 	}
     
-	public String getNombreCLiente() {
+    public Cliente() {
+    	
+    }
+    
+	public String getNombreCliente() {
 		return nombreCliente;
 	}
 

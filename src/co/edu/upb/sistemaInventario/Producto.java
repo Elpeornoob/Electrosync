@@ -4,14 +4,20 @@ public class Producto {
 	private String nombreProducto;
 	private String idProducto;
 	private int stockProducto;
-	private double costoProducto;
+	private float costoProducto;
+	private float precioProducto;
 	
-	public Producto(String nombreProducto, String idProducto, int stockProducto, double costoProducto) {
+	public Producto(String nombreProducto, String idProducto, int stockProducto, float costoProducto) {
 		super();
 		this.nombreProducto = nombreProducto;
 		this.idProducto = idProducto;
 		this.stockProducto = stockProducto;
 		this.costoProducto = costoProducto;
+		this.precioProducto = getPrecioProducto();
+	}
+	
+	public Producto() {
+		
 	}
 
 	public String getNombreProducto() {
@@ -26,9 +32,17 @@ public class Producto {
 		return stockProducto;
 	}
 
-	public double getPrecioProducto() {
-		double precioProducto;
-		precioProducto = costoProducto + (costoProducto * 1.2);
+	public float getCostoProducto() {
+		return costoProducto;
+	}
+
+	public void setCostoProducto(float costoProducto) {
+		this.costoProducto = costoProducto;
+	}
+
+	public float getPrecioProducto() {
+		float precioProducto;
+		precioProducto = (float) (getCostoProducto() + (getCostoProducto() * 1.2));
 		return precioProducto;
 	}
 
